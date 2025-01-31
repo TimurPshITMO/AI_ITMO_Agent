@@ -5,7 +5,7 @@ from yandex_cloud_ml_sdk import YCloudML
 # (Волшебные переменные, дающие доступ ко всем моим кровным)
 # Не разобрался с этим вашим .env, сделал конфигом, все равно
 # не на инфобезе учусь (надеюсь, не забыл в гитигнор кинуть)
-from config import FOLDER_ID, AUTH_KEY
+from conf import FOLDER_ID, AUTH_KEY
 
 def sendPrompt(prompt, log):
 
