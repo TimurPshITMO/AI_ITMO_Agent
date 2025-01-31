@@ -3,9 +3,19 @@ import requests
 import re
 
 def findURLs(s):
+
+    """
+    Поиск всех ссылок в тексте
+    """
+
     return re.findall(r"(?P<url>https?://[^\s\[\]\(\)]+)", s)
 
 def findNumber(s):
+
+    """
+    Определение номера ответа (первое числовое значение в ответе четвертого агента или None)
+    """
+
     if 'None' in s[:min(len(s),10)]:
         return None
     match = re.search(r'\d+', s)
@@ -17,8 +27,15 @@ def findNumber(s):
     else:
         return None
 
+
 def getWebInfo(url, log):
     
+    """
+    Тул для скрэмблинга... скрэппинга... короче для поиска текста по ссылкам
+
+    Читает страничку по адресу, возвращает чистый текст с нее и пары (название, адрес) ссылок на ней
+    """
+
     result = requests.get(url)
     content = result.text
     soup = BeautifulSoup(content, 'lxml')
