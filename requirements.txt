@@ -3,3 +3,7 @@ aiologger[aiofiles]
 pip-chill
 uvicorn
 gunicorn
+bs4
+requests
+dotenv
+os
