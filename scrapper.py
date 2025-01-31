@@ -10,7 +10,10 @@ def findNumber(s):
         return None
     match = re.search(r'\d+', s)
     if match:
-        return match.group()
+        try:
+            return int(match.group())
+        except ValueError as e:
+            return None
     else:
         return None
 
