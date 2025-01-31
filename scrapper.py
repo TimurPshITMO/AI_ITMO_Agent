@@ -3,14 +3,14 @@ import requests
 import re
 
 def findURLs(s):
-    return re.findall(r"(?P<url>https?://[^\s]+)", s)
+    return re.findall(r"(?P<url>https?://[^\s\[\]\(\)]+)", s)
 
 def findNumber(s):
-    if 'None' in s[:min(len(s),6)]:
+    if 'None' in s[:min(len(s),10)]:
         return None
     match = re.search(r'\d+', s)
     if match:
-        return int(match.group())
+        return match.group()
     else:
         return None
 

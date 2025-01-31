@@ -3,7 +3,7 @@ aiologger[aiofiles]
 pip-chill
 uvicorn
 gunicorn
+lxml
 bs4
 requests
-dotenv
-os
+yandex_cloud_ml_sdk

@@ -54,14 +54,22 @@ async def log_requests(request: Request, call_next):
 async def predict(body: PredictionRequest):
     try:
         await logger.info(f"Processing prediction request with id: {body.id}")
-        result = { "answer" : 3, "reasoning" : "", "sources" : [] }
+        result = { "answer" : None, "reasoning" : "", "sources" : [] }
 
         if body.query:
             result = sendPrompt(body.query, logger.info)
 
+        await logger.info(f'result to serialize: {result}')
+
+        sources: List[HttpUrl] = [
+            HttpUrl(link) for link in result['sources']
+        ]
+
         response = PredictionResponse(
-            id = body.id,
-            **result
+            id=body.id,
+            answer=result['answer'] if result['answer'] else 0,
+            reasoning=result['reasoning'],
+            sources=sources,
         )
         await logger.info(f"Successfully processed request {body.id}")
         return response

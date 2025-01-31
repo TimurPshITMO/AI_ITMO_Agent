@@ -49,15 +49,18 @@ def checkValid(sdk, prompt, log):
 def classify(sdk, userPrompt, answer, log):
     instruction = ("Пользователь задал вопрос, в котором, возможно, были варианты ответа. Нейросеть на него ответила. "
                    + "В первой строчке напиши номер варианта в вопросе, соответствующий ответу, данному нейросетью. "
-                   + "Если в вопросе изначально не было пронумеррованных вариантов ответа, то в первой строчке выведи только слово \"None\""
-                   + "В следующую строку вставь подробные пояснения, которые дала нейросеть в ответе. Если в ответе были ссылки, не включай их\n")
+                   + "Если в вопросе изначально не было пронумеррованных вариантов ответа, или нейросеть не дала явного номера верного ответа, то в первой строчке выведи только слово \"None\""
+                   + "В следующую строку вставь подробные пояснения, которые дала нейросеть в ответе. Если в ответе были ссылки, не включай их. Если в ответе было слово None, удали его\n")
     prompt = f"[USER]:\n{userPrompt}\n\n[NEURAL NET]:\n{answer}"
     
     ans = gptReq(sdk, instruction, prompt, log)
-    links = findURLs(answer)[:min(len(links, 3))]
+    links = findURLs(answer)
+    links = links[:min(len(links),3)]
     correct_id = findNumber(answer)
+    result = {'answer' : correct_id, 'reasoning' : ans, 'sources': links}
+    log(f'Classifier result: { result }')
 
-    return {'answer' : correct_id, 'reasoning' : ans, 'sources': links}
+    return result
 
 def outSearch(sdk, prompt, log, prevlink=0, counter=0):
     if prevlink:

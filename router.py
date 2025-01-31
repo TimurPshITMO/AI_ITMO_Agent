@@ -16,7 +16,7 @@ def sendPrompt(prompt, log):
     
     ft = firstTry(sdk, prompt, log)
     if ft['valid']:
-        return classify(sdk, prompt, ft, log)
+        return classify(sdk, prompt, ft['text'], log)
     else:
         ds = outSearch(sdk, prompt, log)
         return classify(sdk, prompt, ds, log)
